@@ -19,7 +19,7 @@ public class CategoriaFilmeController : ControllerBase
 
 //Get all
     [HttpGet]
-    public List<Filme> Get()
+    public List<CategoriaFilme> Get()
     {
         string connectionString =
             configuration.GetConnectionString("DefaultConnection");
@@ -55,9 +55,8 @@ public class CategoriaFilmeController : ControllerBase
         return categoriaFilmes;
     }
 
-
-    [HttpGet("{id}")]
-    public IActionResult Get(int id)
+    [HttpGet("{idFilme}")]
+    public IActionResult Get(int idFilme)
     {
         string connectionString =
             configuration.GetConnectionString("DefaultConnection");
@@ -67,70 +66,50 @@ public class CategoriaFilmeController : ControllerBase
 
         connection.Open();
 
-        string sql =
-            "SELECT * FROM filme_categoria WHERE idFilme_FK = @idFilme AND idCategoria_FK = @idCategoria";
+        string sql = @"
+            SELECT c.*
+            FROM categorias AS c
+            INNER JOIN filme_categorias AS fc
+                ON c.idCategoria = fc.idCategoria_FK
+            WHERE fc.idFilme_FK = @idFilme";
 
         using MySqlCommand command =
             new MySqlCommand(sql, connection);
 
-        command.Parameters.AddWithValue("@id", id);
+        command.Parameters.AddWithValue("@idFilme", idFilme);
 
-        using MySqlDataReader reader =
-            command.ExecuteReader();
+        using MySqlDataReader reader = command.ExecuteReader();
 
-        if (!reader.Read())
+        List<Categoria> categorias = new List<Categoria>();
+
+        while (reader.Read())
+        {
+            int idCategoria = reader.GetInt32("idCategoria");
+            string nomeCategoria = reader.GetString("nomeCategoria");
+
+            Categoria categoria = new Categoria(
+                idCategoria,
+                nomeCategoria
+            );
+
+            categorias.Add(categoria);
+        }
+
+        if (categorias.Count == 0)
         {
             return NotFound();
         }
 
-        int idFilme = reader.GetInt32("idFilme");
-        string titulo = reader.GetString("tituloFilme");
-
-        string sinopse = reader.IsDBNull(
-            reader.GetOrdinal("sinopse"))
-                ? string.Empty
-                : reader.GetString("sinopse");
-
-        int duracao = reader.GetInt32("duracao");
-
-        ClassificacaoFilme classificacao =
-            (ClassificacaoFilme)reader.GetInt32("classificacao");
-
-        DateOnly dataLancamento =
-            DateOnly.FromDateTime(
-                reader.GetDateTime("dataLancamento"));
-
-        string posterUrl = reader.GetString("poster");
-
-        StatusFilme status =
-            (StatusFilme)reader.GetInt32("statusFilme");
-
-        Filme filme = new Filme(
-            idFilme,
-            titulo,
-            sinopse,
-            duracao,
-            classificacao,
-            dataLancamento,
-            posterUrl,
-            status
-        );
-
-        return Ok(filme);
+        return Ok(categorias);
     }
 
 
     [HttpPost]
-    public IActionResult Create(CreateFilmeDto dto)
+    public IActionResult Create(CreateCategoriaFilmeDto dto)
     {
-        Filme filme = new Filme();
-        filme.Titulo = dto.Titulo;
-        filme.Sinopse = dto.Sinopse;
-        filme.Duracao = dto.Duracao;
-        filme.Classificacao = dto.Classificacao;
-        filme.DataLancamento = dto.DataLancamento;
-        filme.PosterUrl = dto.PosterUrl;
-        filme.Status = dto.Status;
+        CategoriaFilme categoriaFilme = new CategoriaFilme();
+        categoriaFilme.IdCategoria = dto.IdCategoria;
+        categoriaFilme.IdFilme = dto.IdFilme;
 
         string connectionString =
             configuration.GetConnectionString("DefaultConnection");
@@ -141,27 +120,20 @@ public class CategoriaFilmeController : ControllerBase
         connection.Open();
 
         string sql =
-            "INSERT INTO filmes (tituloFilme,sinopse,duracao,classificacao,dataLancamento,poster,statusFilme) VALUES (@titulo,@sinopse,@duracao,@classificacao,@dataLancamento,@posterUrl,@status)";
+            "INSERT INTO filme_categorias (idFilme_FK,idCategoria_FK) VALUES (@idFilme,@idCategoria)";
 
         using MySqlCommand command =
             new MySqlCommand(sql, connection);
 
-        command.Parameters.AddWithValue("@titulo",filme.Titulo);
-        command.Parameters.AddWithValue("@sinopse",filme.Sinopse);
-        command.Parameters.AddWithValue("@duracao",filme.Duracao);
-        command.Parameters.AddWithValue("@classificacao",(int)filme.Classificacao);
-        command.Parameters.AddWithValue("@dataLancamento",filme.DataLancamento);
-        command.Parameters.AddWithValue("@posterUrl",filme.PosterUrl);
-        command.Parameters.AddWithValue("@status",(int)filme.Status);
+        command.Parameters.AddWithValue("@idFilme",categoriaFilme.IdFilme);
+        command.Parameters.AddWithValue("@idCategoria",categoriaFilme.IdCategoria);
 
         command.ExecuteNonQuery();
-        return Ok(filme);
+        return Ok(categoriaFilme);
     }
 
-    
-
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, Filme filme)
+    [HttpPut("{idCategoria}/{idFilme}")]
+    public IActionResult Update(int idCategoria, int idFilme, CategoriaFilme categoriaFilme)
     {
         string connectionString =
             configuration.GetConnectionString("DefaultConnection");
@@ -172,18 +144,13 @@ public class CategoriaFilmeController : ControllerBase
         connection.Open();
 
         string sql =
-            "UPDATE filmes SET tituloFilme = @titulo, sinopse = @sinopse ,duracao = @duracao, classificacao = @classificacao, dataLancamento = @dataLancamento, poster = @posterUrl, statusFilme = @status";
+            "UPDATE filme_categorias SET idCategoria_FK = @idCategoria, idFilme_FK = @idFilme";
 
         MySqlCommand command =
             new MySqlCommand(sql, connection);
 
-        command.Parameters.AddWithValue("@titulo",filme.Titulo);
-        command.Parameters.AddWithValue("@sinopse",filme.Sinopse);
-        command.Parameters.AddWithValue("@duracao",filme.Duracao);
-        command.Parameters.AddWithValue("@classificacao",(int)filme.Classificacao);
-        command.Parameters.AddWithValue("@dataLancamento",filme.DataLancamento);
-        command.Parameters.AddWithValue("@posterUrl",filme.PosterUrl);
-        command.Parameters.AddWithValue("@status",(int)filme.Status);
+        command.Parameters.AddWithValue("@idCategoria",categoriaFilme.IdCategoria);
+        command.Parameters.AddWithValue("@idFilme",categoriaFilme.IdFilme);
 
         int rowsAffected = command.ExecuteNonQuery();
 
@@ -195,12 +162,12 @@ public class CategoriaFilmeController : ControllerBase
             return NotFound();
         }
 
-        return Ok(filme);
+        return Ok(categoriaFilme);
     }
 
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    [HttpDelete("{idCategoria}/{idFilme}")]
+    public IActionResult Delete(int idCategoria, int idFilme)
     {
         string connectionString =
             configuration.GetConnectionString("DefaultConnection");
@@ -211,13 +178,14 @@ public class CategoriaFilmeController : ControllerBase
         connection.Open();
 
         string sql =
-            "DELETE FROM filmes WHERE idFilme = @id";
+            "DELETE FROM filme_categorias WHERE idFilme_FK = @idFilme and idCategoria_FK = @idCategoria";
 
         MySqlCommand command =
             new MySqlCommand(sql, connection);
 
-        command.Parameters.AddWithValue("@id", id);
-
+        command.Parameters.AddWithValue("@idFilme", idFilme);
+        command.Parameters.AddWithValue("@idCategoria", idCategoria);
+        
         int rowsAffected = command.ExecuteNonQuery();
 
         command.Dispose();

@@ -78,3 +78,4 @@ E:\DS\projetoFullStack4em1\cinemAPI\obj\Debug\net10.0\refint\cinemAPI.dll
 E:\DS\projetoFullStack4em1\cinemAPI\obj\Debug\net10.0\cinemAPI.pdb
 E:\DS\projetoFullStack4em1\cinemAPI\obj\Debug\net10.0\cinemAPI.genruntimeconfig.cache
 E:\DS\projetoFullStack4em1\cinemAPI\obj\Debug\net10.0\ref\cinemAPI.dll
+E:\DS\projetoFullStack4em1\cinemAPI\obj\Debug\net10.0\cinemAPI.sourcelink.json

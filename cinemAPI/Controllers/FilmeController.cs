@@ -198,11 +198,12 @@ public class FilmeController : ControllerBase
         connection.Open();
 
         string sql =
-            "UPDATE filmes SET tituloFilme = @titulo, sinopse = @sinopse ,duracao = @duracao, classificacao = @classificacao, dataLancamento = @dataLancamento, poster = @posterUrl, statusFilme = @status";
+            "UPDATE filmes SET tituloFilme = @titulo, sinopse = @sinopse ,duracao = @duracao, classificacao = @classificacao, dataLancamento = @dataLancamento, poster = @posterUrl, statusFilme = @status where idFilme = @idFilme";
 
         MySqlCommand command =
             new MySqlCommand(sql, connection);
 
+        command.Parameters.AddWithValue("@idFilme", id);
         command.Parameters.AddWithValue("@titulo",filme.Titulo);
         command.Parameters.AddWithValue("@sinopse",filme.Sinopse);
         command.Parameters.AddWithValue("@duracao",filme.Duracao);
