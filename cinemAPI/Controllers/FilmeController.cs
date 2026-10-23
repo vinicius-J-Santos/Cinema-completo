@@ -184,8 +184,6 @@ public class FilmeController : ControllerBase
         return Ok(filme);
     }
 
-    
-
     [HttpPut("{id}")]
     public IActionResult Update(int id, Filme filme)
     {
@@ -256,6 +254,79 @@ public class FilmeController : ControllerBase
         }
 
         return Ok();
+    }
+
+    [HttpGet("categoria/{idCategoria}")]
+    public IActionResult GetByCategoria(int idCategoria)
+    {
+        string connectionString =
+            configuration.GetConnectionString("DefaultConnection");
+
+        using MySqlConnection connection =
+            new MySqlConnection(connectionString);
+
+        connection.Open();
+
+        string sql = @"
+            SELECT f.*
+            FROM filmes AS f
+            INNER JOIN filme_categorias AS fc
+                ON f.idFilme = fc.idFilme_FK
+            WHERE fc.idCategoria_FK = @idCategoria";
+
+        using MySqlCommand command =
+            new MySqlCommand(sql, connection);
+
+        command.Parameters.AddWithValue("@idCategoria", idCategoria);
+
+        using MySqlDataReader reader = command.ExecuteReader();
+
+        List<Filme> filmes = new List<Filme>();
+
+        while (reader.Read())
+        {
+            int id = reader.GetInt32("idFilme");
+            string titulo = reader.GetString("tituloFilme");
+
+            string sinopse = reader.IsDBNull(
+                reader.GetOrdinal("sinopse"))
+                    ? string.Empty
+                    : reader.GetString("sinopse");
+
+            int duracao = reader.GetInt32("duracao");
+
+            ClassificacaoFilme classificacao =
+                (ClassificacaoFilme)reader.GetInt32("classificacao");
+
+            DateOnly dataLancamento =
+                DateOnly.FromDateTime(
+                    reader.GetDateTime("dataLancamento"));
+
+            string posterUrl = reader.GetString("poster");
+
+            StatusFilme status =
+                (StatusFilme)reader.GetInt32("statusFilme");
+
+            Filme filme = new Filme(
+                id,
+                titulo,
+                sinopse,
+                duracao,
+                classificacao,
+                dataLancamento,
+                posterUrl,
+                status
+            );
+
+            filmes.Add(filme);
+        }
+
+        if (filmes.Count == 0)
+        {
+            return NotFound();
+        }
+
+        return Ok(filmes);
     }
 
 }
