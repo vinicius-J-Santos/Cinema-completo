@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "titulo": "Filme 1",
+        "genero": "Acao",
+        "imagem": ""
+    },
+    {
+        "id": 2,
+        "titulo": "Filme 2",
+        "genero": "Terror",
+        "imagem": "imagens/A.png"
+    },
+    {
+        "id": 3,
+        "titulo": "Filme 3",
+        "genero": "Acao",
+        "imagem": ""
+    },
+    {
+        "id": 4,
+        "titulo": "Filme 4",
+        "genero": "Comedia",
+        "imagem": ""
+    },
+    {
+        "id": 5,
+        "titulo": "Filme 5",
+        "genero": "Documentario",
+        "imagem": ""
+    },
+    {
+        "id": 6,
+        "titulo": "Filme 6",
+        "genero": "Documentario",
+        "imagem": ""
+    },
+    {
+        "id": 7,
+        "titulo": "Filme 7",
+        "genero": "Acao",
+        "imagem": ""
+    },
+    {
+        "id": 8,
+        "titulo": "Filme 8",
+        "genero": "Acao",
+        "imagem": ""
+    }
+]

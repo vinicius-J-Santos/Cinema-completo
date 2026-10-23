@@ -1,0 +1,256 @@
+:root {
+    color-scheme: dark;
+    --ink: #f1f1f3;
+    --muted: #b6b8bf;
+    --red: #ff2032;
+    --line: #383a40;
+    --page: #17181c;
+    --surface: #222329;
+    --nav-ink: #dedfe3;
+    --muted-strong: #d0d1d6;
+    --error: #ff8b95;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--page);
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+a {
+    color: inherit;
+}
+
+.topbar {
+    min-height: 68px;
+    padding: 0 max(24px, calc((100% - 1120px) / 2));
+    display: flex;
+    align-items: center;
+    gap: 44px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+}
+
+.marca {
+    color: var(--red);
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 0;
+    text-decoration: none;
+}
+
+.topbar nav {
+    height: 68px;
+    display: flex;
+    align-items: stretch;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    border-bottom: 3px solid transparent;
+    color: var(--nav-ink);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav-link.ativo {
+    border-color: var(--red);
+    color: var(--red);
+}
+
+main {
+    width: min(1120px, calc(100% - 48px));
+    margin: 0 auto;
+}
+
+.intro {
+    padding: 50px 0 34px;
+}
+
+.intro h1,
+.detalhe-conteudo h1 {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    font-size: clamp(30px, 4vw, 42px);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+.intro > p:last-child {
+    margin: 10px 0 0;
+    color: var(--muted);
+    font-size: 20px;
+}
+
+.catalogo {
+    padding: 22px 0 30px;
+    border-top: 1px solid var(--line);
+}
+
+.catalogo-titulo {
+    margin: 0 0 18px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.grade-filmes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(154px, 1fr));
+    gap: 22px 18px;
+}
+
+.filme-card {
+    min-width: 0;
+    text-decoration: none;
+}
+
+.cartaz {
+    aspect-ratio: 2 / 2.75;
+    overflow: hidden;
+    border-radius: 5px;
+    background: #44464d;
+}
+
+.cartaz img,
+.detalhe-cartaz img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+}
+
+.filme-card h3 {
+    margin: 10px 0 0;
+    font-size: 15px;
+    line-height: 1.35;
+}
+
+.filme-card:focus-visible,
+.voltar:focus-visible,
+.marca:focus-visible,
+.nav-link:focus-visible {
+    outline: 3px solid #f4a5aa;
+    outline-offset: 4px;
+}
+
+.mensagem-erro {
+    padding: 18px 0;
+    color: var(--error);
+    font-weight: 700;
+}
+
+.pagina-detalhe {
+    padding-top: 30px;
+}
+
+.voltar {
+    display: inline-block;
+    margin-bottom: 28px;
+    color: var(--muted-strong);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.voltar:hover {
+    color: var(--red);
+}
+
+.detalhe-filme {
+    display: grid;
+    grid-template-columns: minmax(220px, 330px) 1fr;
+    gap: clamp(28px, 7vw, 80px);
+    padding: 0 0 60px;
+}
+
+.detalhe-cartaz {
+    aspect-ratio: 2 / 2.75;
+    overflow: hidden;
+    border-radius: 5px;
+    background: #44464d;
+}
+
+.detalhe-conteudo h1 {
+    margin-bottom: 12px;
+}
+
+.genero-detalhe {
+    margin: 0;
+    color: var(--red);
+    font-weight: 800;
+}
+
+.texto-detalhe {
+    max-width: 480px;
+    margin: 26px 0;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.65;
+}
+
+.aviso-ingressos {
+    display: inline-block;
+    padding: 12px 17px;
+    border-radius: 3px;
+    background: var(--red);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 600px) {
+    .topbar {
+        min-height: 60px;
+        padding: 0 20px;
+        gap: 16px;
+    }
+
+    .topbar nav {
+        height: 60px;
+    }
+
+    main {
+        width: calc(100% - 40px);
+    }
+
+    .intro {
+        padding: 38px 0 26px;
+    }
+
+    .grade-filmes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px 14px;
+    }
+
+    .detalhe-filme {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        padding-bottom: 40px;
+    }
+
+    .detalhe-cartaz {
+        width: min(100%, 300px);
+        margin: 0 auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}

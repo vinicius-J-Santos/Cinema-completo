@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detalhes do filme selecionado no C!NEMA.">
+    <title>Filme | C!NEMA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="topbar">
+        <a class="marca" href="index.html" aria-label="C!NEMA, página inicial">C!NEMA</a>
+        <nav aria-label="Navegação principal">
+            <a class="nav-link ativo" href="index.html">Filmes</a>
+        </nav>
+    </header>
+    <main class="pagina-detalhe">
+        <a class="voltar" href="index.html">&larr; Voltar aos filmes</a>
+        <section id="detalhe-filme" class="detalhe-filme" aria-live="polite">
+            <div id="cartaz-filme" class="detalhe-cartaz"></div>
+            <div class="detalhe-conteudo">
+                <h1 id="titulo"></h1>
+                <p id="genero-texto" class="genero-detalhe"></p>
+                <p class="texto-detalhe">Uma história para curtir na tela grande. Consulte a programação do seu cinema.</p>
+                <span class="aviso-ingressos">Ingressos em breve</span>
+            </div>
+        </section>
+        <p id="mensagem-erro" class="mensagem-erro" hidden></p>
+    </main>
+    <script src="filmes.js"></script>
+</body>
+</html>
