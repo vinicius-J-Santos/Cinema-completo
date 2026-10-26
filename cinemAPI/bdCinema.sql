@@ -29,6 +29,24 @@ CREATE TABLE IF NOT EXISTS filme_categorias (
     FOREIGN KEY (idCategoria_FK)
         REFERENCES categorias(idCategoria)
 );
+CREATE TABLE IF NOT EXISTS salas (
+	idSala int primary key auto_increment,
+    nomeSala varchar(100) not null,
+    capacidade int not null
+);
+
+INSERT INTO salas (nomeSala, capacidade)
+VALUES
+    ('Sala 1 - Tradicional', 80),
+    ('Sala 2 - Tradicional', 100),
+    ('Sala 3 - VIP', 40),
+    ('Sala 4 - IMAX', 120),
+    ('Sala 5 - 3D', 90),
+    ('Sala 6 - Premium', 50),
+    ('Sala 7 - Família', 120),
+    ('Sala 8 - Compacta', 30),
+    ('Sala 9 - Dolby Atmos', 110),
+    ('Sala 10 - Mega', 120);
 
 INSERT INTO categorias (nomeCategoria)
 VALUES
@@ -117,7 +135,6 @@ VALUES
         1
     );
     
-    
     INSERT INTO filme_categorias (idFilme_FK, idCategoria_FK)
 SELECT f.idFilme, c.idCategoria
 FROM filmes f
@@ -153,3 +170,4 @@ JOIN categorias c
         OR (f.tituloFilme = 'O Planeta Esquecido'
             AND c.nomeCategoria IN ('Ficção Científica', 'Aventura'))
     );
+    
