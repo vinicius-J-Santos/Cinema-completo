@@ -30,7 +30,20 @@ CREATE TABLE IF NOT EXISTS filme_categorias (
         REFERENCES categorias(idCategoria)
 );
 
-INSERT INTO filmes
+INSERT INTO categorias (nomeCategoria)
+VALUES
+    ('Ação'),
+    ('Aventura'),
+    ('Animação'),
+    ('Comédia'),
+    ('Drama'),
+    ('Ficção Científica'),
+    ('Mistério'),
+    ('Suspense'),
+    ('Fantasia'),
+    ('Família');
+    
+		INSERT INTO filmes
     (tituloFilme, sinopse, duracao, classificacao, dataLancamento, poster, statusFilme)
 VALUES
     (
@@ -67,4 +80,76 @@ VALUES
         140, 10, '2026-12-18',
         'https://placehold.co/300x450?text=Alem+das+Estrelas',
         1
+    ),
+    (
+        'A Sombra do Passado',
+        'Um investigador precisa solucionar um crime ligado a segredos de sua própria família.',
+        122, 16, '2024-06-21',
+        'https://placehold.co/300x450?text=A+Sombra+do+Passado',
+        1
+    ),
+    (
+        'Corrida Contra o Tempo',
+        'Um piloto precisa impedir um desastre antes que o tempo acabe.',
+        105, 12, '2025-09-12',
+        'https://placehold.co/300x450?text=Corrida+Contra+o+Tempo',
+        1
+    ),
+    (
+        'O Reino Encantado',
+        'Uma jovem descobre um reino mágico escondido além das montanhas.',
+        110, 0, '2023-12-14',
+        'https://placehold.co/300x450?text=O+Reino+Encantado',
+        1
+    ),
+    (
+        'Risadas em Dobro',
+        'Dois irmãos completamente diferentes se envolvem em situações hilárias.',
+        95, 10, '2024-02-08',
+        'https://placehold.co/300x450?text=Risadas+em+Dobro',
+        1
+    ),
+    (
+        'O Planeta Esquecido',
+        'Uma equipe de cientistas encontra sinais de vida em um planeta abandonado.',
+        135, 12, '2025-11-06',
+        'https://placehold.co/300x450?text=O+Planeta+Esquecido',
+        1
+    );
+    
+    
+    INSERT INTO filme_categorias (idFilme_FK, idCategoria_FK)
+SELECT f.idFilme, c.idCategoria
+FROM filmes f
+JOIN categorias c
+    ON (
+        (f.tituloFilme = 'A Cidade Perdida'
+            AND c.nomeCategoria IN ('Aventura', 'Fantasia'))
+
+        OR (f.tituloFilme = 'Robôs do Amanhã'
+            AND c.nomeCategoria IN ('Ficção Científica', 'Ação'))
+
+        OR (f.tituloFilme = 'O Último Mistério'
+            AND c.nomeCategoria IN ('Mistério', 'Suspense'))
+
+        OR (f.tituloFilme = 'Pequenos Heróis'
+            AND c.nomeCategoria IN ('Aventura', 'Família', 'Animação'))
+
+        OR (f.tituloFilme = 'Além das Estrelas'
+            AND c.nomeCategoria IN ('Ficção Científica', 'Aventura'))
+
+        OR (f.tituloFilme = 'A Sombra do Passado'
+            AND c.nomeCategoria IN ('Mistério', 'Drama', 'Suspense'))
+
+        OR (f.tituloFilme = 'Corrida Contra o Tempo'
+            AND c.nomeCategoria IN ('Ação', 'Suspense'))
+
+        OR (f.tituloFilme = 'O Reino Encantado'
+            AND c.nomeCategoria IN ('Fantasia', 'Aventura', 'Família'))
+
+        OR (f.tituloFilme = 'Risadas em Dobro'
+            AND c.nomeCategoria IN ('Comédia', 'Família'))
+
+        OR (f.tituloFilme = 'O Planeta Esquecido'
+            AND c.nomeCategoria IN ('Ficção Científica', 'Aventura'))
     );
