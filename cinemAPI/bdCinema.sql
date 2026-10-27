@@ -35,6 +35,17 @@ CREATE TABLE IF NOT EXISTS salas (
     capacidade int not null
 );
 
+CREATE TABLE IF NOT EXISTS sessoes(
+    idSessao int primary key auto_increment,
+    idFilme_FK int not null,
+    idSala_FK int not null,
+    dataHora datetime not null,
+    preco float(10,2) not null,
+
+    FOREIGN KEY (idFilme_FK) REFERENCES filmes(idFilme),
+    FOREIGN KEY (idSala_FK) REFERENCES salas(idSala)
+);
+
 INSERT INTO salas (nomeSala, capacidade)
 VALUES
     ('Sala 1 - Tradicional', 80),
