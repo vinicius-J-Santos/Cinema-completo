@@ -8,7 +8,6 @@ public class CreateFilmeDto
     [Required]
     [StringLength(150, MinimumLength = 1)]
     public string Titulo { get; set; } = string.Empty;
-
     public string Sinopse { get; set; } = string.Empty;
     [Required]
     public int Duracao { get; set; }

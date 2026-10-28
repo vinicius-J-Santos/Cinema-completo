@@ -44,7 +44,7 @@ public class SessaoController : ControllerBase
             int id = reader.GetInt32("idSessao");
             int idFilme = reader.GetInt32("idFilme_FK");
             int idSala = reader.GetInt32("idSala_FK");
-            DateTime dataHora = reader.GetDateTime("dataLancamento");
+            DateTime dataHora = reader.GetDateTime("dataHora");
             float preco = reader.GetFloat("preco");
 
             Sessao sessao = new Sessao(

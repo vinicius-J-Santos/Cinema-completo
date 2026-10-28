@@ -40,10 +40,18 @@ CREATE TABLE IF NOT EXISTS sessoes(
     idFilme_FK int not null,
     idSala_FK int not null,
     dataHora datetime not null,
-    preco float(10,2) not null,
+    preco decimal(10,2) not null,
 
     FOREIGN KEY (idFilme_FK) REFERENCES filmes(idFilme),
     FOREIGN KEY (idSala_FK) REFERENCES salas(idSala)
+);
+
+CREATE TABLE IF NOT EXISTS vendas(
+    idVendas int primary key auto_increment,
+    idSessao_FK int not null,
+    quantidade int not null,
+    valorTotal decimal(10,2),
+    dataVenda timestamp not null default
 );
 
 INSERT INTO salas (nomeSala, capacidade)
