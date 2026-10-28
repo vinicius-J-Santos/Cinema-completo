@@ -1,17 +1,17 @@
 
-const params = new URLSearchParams(window.location.search);
-const id = params.get("id");
+const queryParameters = new URLSearchParams(window.location.search);
+const movieId = queryParameters.get("id");
 
-const titulo = document.getElementById("titulo");
-const generoTexto = document.getElementById("genero-texto");
-const cartaz = document.getElementById("cartaz-filme");
-const detalhe = document.getElementById("detalhe-filme");
-const mensagemErro = document.getElementById("mensagem-erro");
-const nomesGeneros = {
-    Acao: "Ação",
-    Terror: "Terror",
-    Comedia: "Comédia",
-    Documentario: "Documentários"
+const movieTitle = document.getElementById("movie-title");
+const movieGenre = document.getElementById("movie-genre");
+const moviePoster = document.getElementById("movie-poster");
+const movieDetails = document.getElementById("movie-details");
+const errorMessage = document.getElementById("error-message");
+const genreNames = {
+    Action: "Ação",
+    Horror: "Terror",
+    Comedy: "Comédia",
+    Documentary: "Documentários"
 };
 
 fetch("filmes.json")
@@ -21,27 +21,27 @@ fetch("filmes.json")
         }
         return response.json();
     })
-    .then(filmes => {
-        const filme = filmes.find(item => String(item.id) === id);
-        if (!filme) {
+    .then(movies => {
+        const movie = movies.find(item => String(item.id) === movieId);
+        if (!movie) {
             throw new Error("Filme não encontrado.");
         }
 
-        const nomeGenero = nomesGeneros[filme.genero] || filme.genero;
-        document.title = `${filme.titulo} | C!NEMA`;
-        titulo.textContent = filme.titulo;
-        generoTexto.textContent = nomeGenero;
+        const genreName = genreNames[movie.genre] || movie.genre;
+        document.title = `${movie.title} | C!NEMA`;
+        movieTitle.textContent = movie.title;
+        movieGenre.textContent = genreName;
 
-        if (filme.imagem) {
-            const imagem = document.createElement("img");
-            imagem.src = filme.imagem;
-            imagem.alt = `Cartaz de ${filme.titulo}`;
-            imagem.addEventListener("error", () => imagem.remove(), { once: true });
-            cartaz.append(imagem);
+        if (movie.image) {
+            const posterImage = document.createElement("img");
+            posterImage.src = movie.image;
+            posterImage.alt = `Cartaz de ${movie.title}`;
+            posterImage.addEventListener("error", () => posterImage.remove(), { once: true });
+            moviePoster.append(posterImage);
         }
     })
     .catch(() => {
-        detalhe.hidden = true;
-        mensagemErro.hidden = false;
-        mensagemErro.textContent = "Não encontramos esse filme. Volte à lista e escolha outro título.";
+        movieDetails.hidden = true;
+        errorMessage.hidden = false;
+        errorMessage.textContent = "Não encontramos esse filme. Volte à lista e escolha outro título.";
     });

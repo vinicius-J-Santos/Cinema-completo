@@ -12,19 +12,33 @@
 </head>
 <body>
     <header class="topbar">
-        <a class="marca" href="index.html" aria-label="C!NEMA, página inicial">C!NEMA</a>
+        <a class="brand" href="index.html" aria-label="C!NEMA, página inicial"><img src="imagens/cinema-logo.png" alt=""></a>
         <nav aria-label="Navegação principal">
-            <a class="nav-link ativo" href="index.html">Filmes</a>
+            <a class="nav-link active" href="index.html">Filmes</a>
+            <a class="nav-link" href="#about">Sobre</a>
+            <a class="nav-link" href="login.html">Login</a>
         </nav>
     </header>
     <main>
-        <section class="intro" aria-labelledby="titulo-pagina">
-            <h1 id="titulo-pagina">Encontre seu próximo filme.</h1>
-            <p>Escolha uma história e prepare a pipoca.</p>
+        <section class="featured" aria-labelledby="featured-title">
+            <div class="featured-heading">
+                <h1 id="featured-title">Filmes em destaque</h1>
+                <div class="slider-controls">
+                    <button id="slider-previous" class="slider-button" type="button" aria-label="Filmes anteriores"><ion-icon name="arrow-back-outline"></ion-icon></button>
+                    <button id="slider-next" class="slider-button" type="button" aria-label="Próximos filmes"><ion-icon name="arrow-forward-outline"></ion-icon></button>
+                </div>
+            </div>
+            <div id="featured-slider" class="featured-slider" aria-label="Filmes em destaque"></div>
         </section>
-        <div id="catalogos" class="catalogos" aria-live="polite"></div>
+        <div id="movie-catalogs" class="catalogs" aria-live="polite"></div>
+        <section id="about" class="about" aria-labelledby="about-title">
+            <h2 id="about-title">Sobre o C!NEMA</h2>
+            <p>Eita site guloso</p>
+        </section>
     </main>
     <script src="script.js"></script>
-    
+    <script src="script2.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@8.0.13/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

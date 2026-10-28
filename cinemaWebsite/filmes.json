@@ -1,68 +1,146 @@
 [
     {
         "id": 1,
-        "titulo": "Filme 1",
-        "genero": "Acao",
-        "imagem": ""
+        "title": "Filme 1",
+        "genre": "Action",
+        "image": ""
     },
     {
         "id": 2,
-        "titulo": "Filme 2",
-        "genero": "Terror",
-        "imagem": "imagens/A.png"
+        "title": "Filme 2",
+        "genre": "Horror",
+        "image": "imagens/A.png"
     },
     {
         "id": 3,
-        "titulo": "Filme 3",
-        "genero": "Acao",
-        "imagem": ""
-    },
-    {
-        "id": 3,
-        "titulo": "Filme 3",
-        "genero": "Acao",
-        "imagem": ""
-    },
-    {
-        "id": 3,
-        "titulo": "Filme 3",
-        "genero": "Acao",
-        "imagem": ""
-    },
-    {
-        "id": 3,
-        "titulo": "Filme 3",
-        "genero": "Acao",
-        "imagem": ""
+        "title": "Filme 3",
+        "genre": "Action",
+        "image": ""
     },
     {
         "id": 4,
-        "titulo": "Filme 4",
-        "genero": "Comedia",
-        "imagem": ""
+        "title": "Filme 4",
+        "genre": "Comedy",
+        "image": ""
     },
     {
         "id": 5,
-        "titulo": "Filme 5",
-        "genero": "Documentario",
-        "imagem": ""
+        "title": "Filme 5",
+        "genre": "Documentary",
+        "image": ""
     },
     {
         "id": 6,
-        "titulo": "Filme 6",
-        "genero": "Documentario",
-        "imagem": ""
+        "title": "Filme 6",
+        "genre": "Documentary",
+        "image": ""
     },
     {
         "id": 7,
-        "titulo": "Filme 7",
-        "genero": "Acao",
-        "imagem": ""
+        "title": "Filme 7",
+        "genre": "Action",
+        "image": ""
     },
     {
         "id": 8,
-        "titulo": "Filme 8",
-        "genero": "Acao",
-        "imagem": ""
+        "title": "Filme 8",
+        "genre": "Action",
+        "image": ""
+    },
+    {
+        "id": 9,
+        "title": "Filme 9",
+        "genre": "Horror",
+        "image": ""
+    },
+    {
+        "id": 10,
+        "title": "Filme 10",
+        "genre": "Comedy",
+        "image": ""
+    },
+    {
+        "id": 11,
+        "title": "Filme 11",
+        "genre": "Documentary",
+        "image": ""
+    },
+    {
+        "id": 12,
+        "title": "Filme 12",
+        "genre": "Action",
+        "image": ""
+    },
+    {
+        "id": 13,
+        "title": "Filme 13",
+        "genre": "Horror",
+        "image": ""
+    },
+    {
+        "id": 14,
+        "title": "Filme 14",
+        "genre": "Comedy",
+        "image": ""
+    },
+    {
+        "id": 15,
+        "title": "Filme 15",
+        "genre": "Documentary",
+        "image": ""
+    },
+    {
+        "id": 16,
+        "title": "Filme 16",
+        "genre": "Action",
+        "image": ""
+    },
+    {
+        "id": 17,
+        "title": "Filme 17",
+        "genre": "Horror",
+        "image": ""
+    },
+    {
+        "id": 18,
+        "title": "Filme 18",
+        "genre": "Comedy",
+        "image": ""
+    },
+    {
+        "id": 19,
+        "title": "Filme 19",
+        "genre": "Documentary",
+        "image": ""
+    },
+    {
+        "id": 20,
+        "title": "Filme 20",
+        "genre": "Action",
+        "image": ""
+    },
+    {
+        "id": 21,
+        "title": "Filme 21",
+        "genre": "Horror",
+        "image": ""
+    },
+    {
+        "id": 22,
+        "title": "Filme 22",
+        "genre": "Comedy",
+        "image": ""
+    },
+    {
+        "id": 23,
+        "title": "Filme 23",
+        "genre": "Documentary",
+        "image": ""
+    },
+    {
+        "id": 24,
+        "title": "Filme 24",
+        "genre": "Action",
+        "image": ""
     }
 ]
