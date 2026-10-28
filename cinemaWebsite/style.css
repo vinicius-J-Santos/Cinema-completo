@@ -33,7 +33,7 @@ a {
     align-items: center;
     gap: 44px;
     background: var(--surface);
-    border-bottom: 1px solid var(--line);
+
 }
 
 .marca {
@@ -66,7 +66,7 @@ a {
 }
 
 main {
-    width: min(1120px, calc(100% - 48px));
+    width: min(1420px, calc(100% - 48px));
     margin: 0 auto;
 }
 
@@ -91,7 +91,6 @@ main {
 
 .catalogo {
     padding: 22px 0 30px;
-    border-top: 1px solid var(--line);
 }
 
 .catalogo-titulo {
@@ -102,17 +101,32 @@ main {
 
 .grade-filmes {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(154px, 1fr));
-    gap: 22px 18px;
+    grid-auto-flow: column;
+    grid-auto-columns: 280px;
+    gap: 18px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    cursor: grab;
+    user-select: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: auto;
+}
+
+.grade-filmes .filme-card {
+    min-width: 0;
+}
+.grade-filmes:active {
+    cursor: grabbing;
 }
 
 .filme-card {
-    min-width: 0;
     text-decoration: none;
 }
 
 .cartaz {
-    aspect-ratio: 2 / 2.75;
+    aspect-ratio: 16/ 9;
     overflow: hidden;
     border-radius: 5px;
     background: #44464d;
@@ -205,7 +219,7 @@ main {
     font-size: 14px;
     font-weight: 800;
 }
-
+    
 [hidden] {
     display: none !important;
 }
