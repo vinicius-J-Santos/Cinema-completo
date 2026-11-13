@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS vendas(
     idSessao_FK int not null,
     quantidade int not null,
     valorTotal decimal(10,2),
-    dataVenda timestamp not null default
+    dataVenda TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 INSERT INTO salas (nomeSala, capacidade)
