@@ -1,30 +1,31 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\1\\Desktop\\Cinema-completo\\cinemApi\\cinemAPI.csproj": {}
+    "E:\\DS\\projetoFullStack4em1\\cinemAPI\\cinemAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\1\\Desktop\\Cinema-completo\\cinemApi\\cinemAPI.csproj": {
+    "E:\\DS\\projetoFullStack4em1\\cinemAPI\\cinemAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\1\\Desktop\\Cinema-completo\\cinemApi\\cinemAPI.csproj",
+        "projectUniqueName": "E:\\DS\\projetoFullStack4em1\\cinemAPI\\cinemAPI.csproj",
         "projectName": "cinemAPI",
-        "projectPath": "C:\\Users\\1\\Desktop\\Cinema-completo\\cinemApi\\cinemAPI.csproj",
-        "packagesPath": "C:\\Users\\1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\1\\Desktop\\Cinema-completo\\cinemApi\\obj\\",
+        "projectPath": "E:\\DS\\projetoFullStack4em1\\cinemAPI\\cinemAPI.csproj",
+        "packagesPath": "C:\\Users\\pichau\\.nuget\\packages\\",
+        "outputPath": "E:\\DS\\projetoFullStack4em1\\cinemAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\1\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\pichau\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net10.0": {
-            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -39,11 +40,10 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.400"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
             "MySqlConnector": {
@@ -74,7 +74,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
