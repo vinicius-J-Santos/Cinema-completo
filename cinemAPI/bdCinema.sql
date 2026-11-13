@@ -1,3 +1,4 @@
+
 CREATE DATABASE IF NOT EXISTS cinema;
 USE cinema;
 
@@ -24,34 +25,45 @@ CREATE TABLE IF NOT EXISTS filme_categorias (
     PRIMARY KEY (idFilme_FK, idCategoria_FK),
 
     FOREIGN KEY (idFilme_FK)
-        REFERENCES filmes(idFilme),
+        REFERENCES filmes(idFilme)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
 
     FOREIGN KEY (idCategoria_FK)
         REFERENCES categorias(idCategoria)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
+
 CREATE TABLE IF NOT EXISTS salas (
-	idSala int primary key auto_increment,
-    nomeSala varchar(100) not null,
-    capacidade int not null
+    idSala INT AUTO_INCREMENT PRIMARY KEY,
+    nomeSala VARCHAR(100) NOT NULL,
+    capacidade INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS sessoes(
-    idSessao int primary key auto_increment,
-    idFilme_FK int not null,
-    idSala_FK int not null,
-    dataHora datetime not null,
-    preco decimal(10,2) not null,
+CREATE TABLE IF NOT EXISTS sessoes (
+    idSessao INT AUTO_INCREMENT PRIMARY KEY,
+    idFilme_FK INT NOT NULL,
+    idSala_FK INT NOT NULL,
+    dataHora DATETIME NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
 
-    FOREIGN KEY (idFilme_FK) REFERENCES filmes(idFilme),
-    FOREIGN KEY (idSala_FK) REFERENCES salas(idSala)
+    FOREIGN KEY (idFilme_FK)
+        REFERENCES filmes(idFilme),
+
+    FOREIGN KEY (idSala_FK)
+        REFERENCES salas(idSala)
 );
 
-CREATE TABLE IF NOT EXISTS vendas(
-    idVendas int primary key auto_increment,
-    idSessao_FK int not null,
-    quantidade int not null,
-    valorTotal decimal(10,2),
-    dataVenda timestamp not null default
+CREATE TABLE IF NOT EXISTS vendas (
+    idVendas INT AUTO_INCREMENT PRIMARY KEY,
+    idSessao_FK INT NOT NULL,
+    quantidade INT NOT NULL,
+    valorTotal DECIMAL(10,2) NOT NULL,
+    dataVenda TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (idSessao_FK)
+        REFERENCES sessoes(idSessao)
 );
 
 INSERT INTO salas (nomeSala, capacidade)
@@ -79,8 +91,8 @@ VALUES
     ('Suspense'),
     ('Fantasia'),
     ('Família');
-    
-		INSERT INTO filmes
+
+INSERT INTO filmes
     (tituloFilme, sinopse, duracao, classificacao, dataLancamento, poster, statusFilme)
 VALUES
     (
@@ -153,40 +165,39 @@ VALUES
         'https://placehold.co/300x450?text=O+Planeta+Esquecido',
         1
     );
-    
-    INSERT INTO filme_categorias (idFilme_FK, idCategoria_FK)
+
+INSERT INTO filme_categorias (idFilme_FK, idCategoria_FK)
 SELECT f.idFilme, c.idCategoria
 FROM filmes f
 JOIN categorias c
-    ON (
-        (f.tituloFilme = 'A Cidade Perdida'
-            AND c.nomeCategoria IN ('Aventura', 'Fantasia'))
+ON (
+    (f.tituloFilme = 'A Cidade Perdida'
+        AND c.nomeCategoria IN ('Aventura', 'Fantasia'))
 
-        OR (f.tituloFilme = 'Robôs do Amanhã'
-            AND c.nomeCategoria IN ('Ficção Científica', 'Ação'))
+    OR (f.tituloFilme = 'Robôs do Amanhã'
+        AND c.nomeCategoria IN ('Ficção Científica', 'Ação'))
 
-        OR (f.tituloFilme = 'O Último Mistério'
-            AND c.nomeCategoria IN ('Mistério', 'Suspense'))
+    OR (f.tituloFilme = 'O Último Mistério'
+        AND c.nomeCategoria IN ('Mistério', 'Suspense'))
 
-        OR (f.tituloFilme = 'Pequenos Heróis'
-            AND c.nomeCategoria IN ('Aventura', 'Família', 'Animação'))
+    OR (f.tituloFilme = 'Pequenos Heróis'
+        AND c.nomeCategoria IN ('Aventura', 'Família', 'Animação'))
 
-        OR (f.tituloFilme = 'Além das Estrelas'
-            AND c.nomeCategoria IN ('Ficção Científica', 'Aventura'))
+    OR (f.tituloFilme = 'Além das Estrelas'
+        AND c.nomeCategoria IN ('Ficção Científica', 'Aventura'))
 
-        OR (f.tituloFilme = 'A Sombra do Passado'
-            AND c.nomeCategoria IN ('Mistério', 'Drama', 'Suspense'))
+    OR (f.tituloFilme = 'A Sombra do Passado'
+        AND c.nomeCategoria IN ('Mistério', 'Drama', 'Suspense'))
 
-        OR (f.tituloFilme = 'Corrida Contra o Tempo'
-            AND c.nomeCategoria IN ('Ação', 'Suspense'))
+    OR (f.tituloFilme = 'Corrida Contra o Tempo'
+        AND c.nomeCategoria IN ('Ação', 'Suspense'))
 
-        OR (f.tituloFilme = 'O Reino Encantado'
-            AND c.nomeCategoria IN ('Fantasia', 'Aventura', 'Família'))
+    OR (f.tituloFilme = 'O Reino Encantado'
+        AND c.nomeCategoria IN ('Fantasia', 'Aventura', 'Família'))
 
-        OR (f.tituloFilme = 'Risadas em Dobro'
-            AND c.nomeCategoria IN ('Comédia', 'Família'))
+    OR (f.tituloFilme = 'Risadas em Dobro'
+        AND c.nomeCategoria IN ('Comédia', 'Família'))
 
-        OR (f.tituloFilme = 'O Planeta Esquecido'
-            AND c.nomeCategoria IN ('Ficção Científica', 'Aventura'))
-    );
-    
+    OR (f.tituloFilme = 'O Planeta Esquecido'
+        AND c.nomeCategoria IN ('Ficção Científica', 'Aventura'))
+);

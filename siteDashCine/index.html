@@ -1,18 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>dashboard | Cinema</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-     <aside class="sidebar"></aside>
+     <aside class="sidebar">
+        <h2>DASHBOARD</h2>
+        <button type="button" data-page="criar">criar</button>
+        <button type="button" data-page="deletar">deletar</button>
+        <button type="button" data-page="alterar">alterar</button>
+     </aside>
      <div class="navbar">
         
      </div>
-     <main class="content"></main>
+     <main class="content" id="content" aria-live="polite"></main>
     </div>
+    <script src="script.js" defer></script>
 </body>
 </html>
