@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using cinemAPI.Models;
 using cinemAPI.DTOs;
+using cinemAPI.Enums;
 using System.Data.SqlTypes;
 
 namespace cinemAPI.Controllers;
@@ -109,10 +110,6 @@ public class VendaController : ControllerBase
     [HttpPost]
     public IActionResult Create(CreateVendaDto dto)
     {
-        Venda venda = new Venda();
-        venda.IdSessao = dto.IdSessao;
-        venda.Quantidade = dto.Quantidade;
-
         string connectionString =
             configuration.GetConnectionString("DefaultConnection");
 
@@ -121,30 +118,85 @@ public class VendaController : ControllerBase
 
         connection.Open();
 
-        string sqlPreco = @"
-            SELECT preco
-            FROM sessoes
-            WHERE idSessao = @idSessao";
+        // 1. Buscar informações da sessão e do filme
+        string sqlSessao = @"
+            SELECT
+                se.preco,
+                se.status,
+                se.dataHora,
+                f.statusFilme
 
-        using MySqlCommand commandPreco =
-            new MySqlCommand(sqlPreco, connection);
+            FROM sessoes AS se
 
-        commandPreco.Parameters.AddWithValue(
-            "@idSessao", dto.IdSessao);
+            INNER JOIN filmes AS f
+                ON se.idFilme_FK = f.idFilme
 
-        object? resultadoPreco = commandPreco.ExecuteScalar();
+            WHERE se.idSessao = @idSessao";
 
-        if (resultadoPreco == null ||
-            resultadoPreco == DBNull.Value)
+        decimal preco;
+        StatusSessao statusSessao;
+        DateTime dataHora;
+        StatusFilme statusFilme;
+
+        using (MySqlCommand commandSessao =
+            new MySqlCommand(sqlSessao, connection))
         {
-            return NotFound(new
+            commandSessao.Parameters.AddWithValue(
+                "@idSessao", dto.IdSessao);
+
+            using MySqlDataReader reader =
+                commandSessao.ExecuteReader();
+
+            if (!reader.Read())
             {
-                mensagem = "Sessão não encontrada."
+                return NotFound(new
+                {
+                    mensagem = "Sessão não encontrada."
+                });
+            }
+
+            preco = reader.GetDecimal("preco");
+
+            statusSessao = (StatusSessao)
+                reader.GetInt32("status");
+
+            dataHora = DateTime.SpecifyKind(
+                reader.GetDateTime("dataHora"),
+                DateTimeKind.Utc
+            );
+
+            statusFilme = (StatusFilme)
+                reader.GetInt32("statusFilme");
+        }
+
+        // 2. Verificar o status da sessão
+        if (statusSessao == StatusSessao.Cancelado)
+        {
+            return Conflict(new
+            {
+                mensagem = "Esta sessão foi cancelada."
             });
         }
 
-        decimal preco = Convert.ToDecimal(resultadoPreco);
+        if (statusSessao == StatusSessao.Finalizado ||
+            dataHora <= DateTime.UtcNow)
+        {
+            return Conflict(new
+            {
+                mensagem = "Esta sessão já foi encerrada."
+            });
+        }
 
+        // 3. Verificar o status do filme
+        if (statusFilme != StatusFilme.EmCartaz)
+        {
+            return Conflict(new
+            {
+                mensagem = "Este filme não está disponível para compra."
+            });
+        }
+
+        // 4. Buscar capacidade da sala
         string sqlCap = @"
             SELECT sa.capacidade
             FROM sessoes AS se
@@ -171,6 +223,7 @@ public class VendaController : ControllerBase
 
         int capacidade = Convert.ToInt32(resultadoCap);
 
+        // 5. Consultar ingressos vendidos
         string sqlVendidos = @"
             SELECT COALESCE(SUM(quantidade), 0)
             FROM vendas
@@ -187,17 +240,24 @@ public class VendaController : ControllerBase
 
         int disponiveis = capacidade - vendidos;
 
+        // 6. Verificar disponibilidade
         if (dto.Quantidade > disponiveis)
         {
             return Conflict(new
             {
                 mensagem = $"Ingressos insuficientes. " +
-                        $"Disponíveis: {Math.Max(0, disponiveis)}."
+                    $"Disponíveis: {Math.Max(0, disponiveis)}."
             });
         }
 
-        venda.ValorTotal = preco * venda.Quantidade;
+        // 7. Calcular valor total
+        Venda venda = new Venda();
 
+        venda.IdSessao = dto.IdSessao;
+        venda.Quantidade = dto.Quantidade;
+        venda.ValorTotal = preco * dto.Quantidade;
+
+        // 8. Registrar venda
         string sql = @"
             INSERT INTO vendas
                 (idSessao_FK, quantidade, valorTotal)

@@ -1,3 +1,5 @@
+using cinemAPI.Enums;
+
 namespace cinemAPI.Models;
 
 public class Sessao{
@@ -6,16 +8,18 @@ public class Sessao{
     public int IdSala { get; set; }
     public DateTime DataHora { get; set; }
     public float Preco { get; set; }
+    public StatusSessao Status { get; set; }
 
     public Sessao(){
 
     }
-    public Sessao(int id, int idFilme, int idSala, DateTime dataHora, float preco)
+    public Sessao(int id, int idFilme, int idSala, DateTime dataHora, float preco, StatusSessao status)
     {
         Id = id;
         IdFilme = idFilme;
         IdSala = idSala;
         DataHora = dataHora;
         Preco = preco;
+        Status = status;
     }
 }

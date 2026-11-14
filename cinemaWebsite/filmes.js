@@ -29,6 +29,26 @@ function formatarData(data) {
 
     return `${dia}/${mes}/${ano}`;
 }
+// Formata data e horário de uma sessão
+function formatarDataHora(dataUTC) {
+    const data = new Date(dataUTC);
+
+    return {
+        horario: data.toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+            timeZone: "America/Sao_Paulo"
+        }),
+
+        data: data.toLocaleDateString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            timeZone: "America/Sao_Paulo"
+        })
+    };
+}
 
 // Busca e carrega o filme
 async function carregarFilme() {
@@ -123,3 +143,87 @@ async function carregarFilme() {
 }
 
 carregarFilme();
+
+async function carregarSessoes() {
+    const container = document.getElementById("sessions-container");
+
+    try {
+        const response = await fetch(
+            `http://localhost:5172/api/Sessao/filme/${movieId}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Erro ao buscar sessões.");
+        }
+
+        const sessoes = await response.json();
+
+        container.innerHTML = "";
+
+        if (sessoes.length === 0) {
+            container.textContent = "Nenhuma sessão disponível.";
+            return;
+        }
+
+        sessoes.forEach(sessao => {
+            const dataFormatada = formatarDataHora(sessao.dataHora);
+
+            const card = document.createElement("article");
+            card.className = "session-card";
+
+            const sala = document.createElement("h3");
+            sala.textContent = sessao.nomeSala;
+
+            const horario = document.createElement("p");
+            horario.textContent = dataFormatada.horario;
+
+            const dataTexto = document.createElement("p");
+            dataTexto.textContent = dataFormatada.data;
+
+            const preco = document.createElement("p");
+            preco.textContent = Number(sessao.preco).toLocaleString(
+                "pt-BR",
+                {
+                    style: "currency",
+                    currency: "BRL"
+                }
+            );
+
+            const disponibilidade = document.createElement("p");
+            disponibilidade.textContent =
+                `${sessao.ingressosDisponiveis} ingressos disponíveis`;
+
+            const botao = document.createElement("button");
+            botao.textContent = "Selecionar sessão";
+            botao.type = "button";
+
+            if (sessao.ingressosDisponiveis <= 0) {
+                botao.disabled = true;
+                botao.textContent = "Esgotado";
+            }
+
+            botao.addEventListener("click", () => {
+                window.location.href =
+                    `confirmar.html?idSessao=${sessao.idSessao}`;
+            });
+
+            card.append(
+                sala,
+                horario,
+                dataTexto,
+                preco,
+                disponibilidade,
+                botao
+            );
+
+            container.append(card);
+        });
+
+    } catch (error) {
+        console.error(error);
+        container.textContent =
+            "Não foi possível carregar as sessões.";
+    }
+}
+
+carregarSessoes();

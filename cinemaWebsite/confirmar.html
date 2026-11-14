@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Confirme sua compra no C!NEMA.">
+    <title>Confirmar compra | C!NEMA</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <a class="brand" href="index.html">
+            <img src="imagens/cinema-logo.png" alt="C!NEMA">
+        </a>
+
+        <nav aria-label="Navegação principal">
+            <a class="nav-link" href="index.html">Filmes</a>
+            <a class="nav-link" href="index.html#about">Sobre</a>
+        </nav>
+    </header>
+
+    <main class="checkout-page">
+
+        <a class="back-link" href="index.html">
+            &larr; Voltar aos filmes
+        </a>
+
+        <section id="checkout-content" hidden>
+
+            <h1>Confirme sua compra</h1>
+
+            <div class="checkout-card">
+
+                <div class="checkout-movie">
+                    <img id="checkout-poster" src="" alt="">
+
+                    <div>
+                        <h2 id="checkout-title"></h2>
+                        <p id="checkout-duration"></p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="checkout-info">
+                    <p>
+                        **Sala:** <span id="checkout-room"></span>
+                    </p>
+
+                    <p>
+                        **Data:** <span id="checkout-date"></span>
+                    </p>
+
+                    <p>
+                        **Horário:** <span id="checkout-time"></span>
+                    </p>
+
+                    <p>
+                        **Preço por ingresso:** 
+                        <span id="checkout-price"></span>
+                    </p>
+                </div>
+
+                <hr>
+
+                <div class="checkout-quantity">
+                    <label for="quantity">Quantidade de ingressos</label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        min="1"
+                        step="1"
+                        value="1"
+                    >
+                </div>
+
+                <div class="checkout-total">
+                    <span>Total:</span>
+                    <strong id="checkout-total"></strong>
+                </div>
+
+                <button id="confirm-button" type="button">
+                    Confirmar compra
+                </button>
+
+                <p id="checkout-error" class="error-message" hidden></p>
+
+            </div>
+
+        </section>
+
+        <section id="success-content" hidden>
+            <h1>Compra realizada!</h1>
+            <p>Sua compra foi registrada com sucesso.</p>
+            <a href="index.html" class="back-link">
+                Voltar aos filmes
+            </a>
+        </section>
+
+        <p id="loading-error" class="error-message" hidden></p>
+
+    </main>
+
+    <script src="confirmar.js"></script>
+
+</body>
+</html>

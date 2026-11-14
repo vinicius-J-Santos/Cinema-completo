@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("cinemAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d9a6f4a1f1fe1dfc6d3b6279e85976d3c23ef51")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d636ecacbb2d6043ce895897b41b72b3c321f457")]
 [assembly: System.Reflection.AssemblyProductAttribute("cinemAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("cinemAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
