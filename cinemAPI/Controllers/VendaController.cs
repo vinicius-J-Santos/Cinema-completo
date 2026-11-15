@@ -170,16 +170,15 @@ public class VendaController : ControllerBase
         }
 
         // 2. Verificar o status da sessão
-        if (statusSessao == StatusSessao.Cancelado)
+        if (statusSessao != StatusSessao.Disponivel)
         {
             return Conflict(new
             {
-                mensagem = "Esta sessão foi cancelada."
+                mensagem = "Esta sessão não está disponível para compra."
             });
         }
 
-        if (statusSessao == StatusSessao.Finalizado ||
-            dataHora <= DateTime.UtcNow)
+        if (dataHora <= DateTime.UtcNow)
         {
             return Conflict(new
             {
