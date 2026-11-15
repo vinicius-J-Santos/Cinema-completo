@@ -14,6 +14,19 @@ const detailContent = document.querySelector(".detail-content");
 const detailText = document.querySelector(".detail-text");
 const ticketNotice = document.querySelector(".ticket-notice");
 
+const STATUS_FILME = {
+    EM_CARTAZ: 0,
+    EM_BREVE: 1,
+    INDISPONIVEL: 2
+};
+
+const STATUS_SESSAO = {
+    CANCELADO: 0,
+    DISPONIVEL: 1,
+    FINALIZADO: 2
+};
+
+const sessionsSection = document.getElementById("sessions-section");
 const classificacoes = {
     0: "Livre",
     10: "10 anos",
@@ -68,6 +81,18 @@ async function carregarFilme() {
         }
 
         const filme = await respostaFilme.json();
+
+        // Verifica se o filme está indisponível
+        if (Number(filme.status) === STATUS_FILME.INDISPONIVEL) {
+            movieDetails.hidden = true;
+            sessionsSection.hidden = true;
+
+            errorMessage.hidden = false;
+            errorMessage.textContent =
+                "Este filme não está disponível no momento.";
+
+            return null;
+        }
 
         // 2. Buscar categorias
         const respostaCategorias = await fetch(
@@ -130,6 +155,19 @@ async function carregarFilme() {
         // Insere os dados sem apagar os elementos existentes
         detailContent.insertBefore(metadata, ticketNotice);
 
+        if (Number(filme.status) === STATUS_FILME.EM_BREVE) {
+            ticketNotice.hidden = false;
+            ticketNotice.textContent = "Ingressos em breve!";
+
+            sessionsSection.hidden = true;
+        } else {
+            ticketNotice.hidden = true;
+            sessionsSection.hidden = false;
+        }
+
+        // Devolve os dados do filme para quem chamou a função
+        return filme;
+
     } catch (erro) {
 
         console.error("Erro ao carregar filme:", erro);
@@ -139,10 +177,11 @@ async function carregarFilme() {
 
         errorMessage.textContent =
             "Não encontramos esse filme. Volte à lista e escolha outro título.";
+        
+        return null;
     }
 }
 
-carregarFilme();
 
 async function carregarSessoes() {
     const container = document.getElementById("sessions-container");
@@ -158,14 +197,26 @@ async function carregarSessoes() {
 
         const sessoes = await response.json();
 
+        // Filtra somente sessões disponíveis e futuras
+        const sessoesValidas = sessoes.filter(sessao => {
+            const status = Number(sessao.status);
+            const data = new Date(sessao.dataHora);
+
+            return (
+                status === STATUS_SESSAO.DISPONIVEL &&
+                !Number.isNaN(data.getTime()) &&
+                data.getTime() > Date.now()
+            );
+        });
+
         container.innerHTML = "";
 
-        if (sessoes.length === 0) {
+        if (sessoesValidas.length === 0) {
             container.textContent = "Nenhuma sessão disponível.";
             return;
         }
 
-        sessoes.forEach(sessao => {
+        sessoesValidas.forEach(sessao => {
             const dataFormatada = formatarDataHora(sessao.dataHora);
 
             const card = document.createElement("article");
@@ -197,15 +248,21 @@ async function carregarSessoes() {
             botao.textContent = "Selecionar sessão";
             botao.type = "button";
 
-            if (sessao.ingressosDisponiveis <= 0) {
+            const ingressosDisponiveis = Number(
+                sessao.ingressosDisponiveis
+            );
+
+            if (ingressosDisponiveis <= 0) {
                 botao.disabled = true;
                 botao.textContent = "Esgotado";
-            }
 
-            botao.addEventListener("click", () => {
-                window.location.href =
-                    `confirmar.html?idSessao=${sessao.idSessao}`;
-            });
+                disponibilidade.textContent = "Ingressos esgotados";
+            } else {
+                botao.addEventListener("click", () => {
+                    window.location.href =
+                        `confirmar.html?idSessao=${sessao.idSessao}`;
+                });
+            }
 
             card.append(
                 sala,
@@ -226,4 +283,17 @@ async function carregarSessoes() {
     }
 }
 
-carregarSessoes();
+// Inicia o carregamento da página
+async function iniciarPagina() {
+    const filme = await carregarFilme();
+
+    if (!filme) return;
+
+    if (Number(filme.status) === STATUS_FILME.EM_BREVE) {
+        return;
+    }
+
+    await carregarSessoes();
+}
+
+iniciarPagina();

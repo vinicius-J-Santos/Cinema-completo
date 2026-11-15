@@ -685,3 +685,24 @@ main {
         width: 80px;
     }
 }
+
+.movie-card,
+.featured-card {
+    position: relative;
+}
+
+.movie-status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    padding: 6px 12px;
+    border-radius: 20px;
+
+    background-color: #d99b35;
+    color: #fff;
+
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
