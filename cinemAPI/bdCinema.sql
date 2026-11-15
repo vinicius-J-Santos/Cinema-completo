@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS sessoes (
     idSala_FK INT NOT NULL,
     dataHora DATETIME NOT NULL,
     preco DECIMAL(10,2) NOT NULL,
+    status INT NOT NULL DEFAULT 1,
 
     FOREIGN KEY (idFilme_FK)
         REFERENCES filmes(idFilme),
@@ -55,12 +56,30 @@ CREATE TABLE IF NOT EXISTS sessoes (
         REFERENCES salas(idSala)
 );
 
+SET @status_column_exists = (
+    SELECT COUNT(*)
+    FROM information_schema.COLUMNS
+    WHERE TABLE_SCHEMA = DATABASE()
+      AND TABLE_NAME = 'sessoes'
+      AND COLUMN_NAME = 'status'
+);
+
+SET @status_column_migration = IF(
+    @status_column_exists = 0,
+    'ALTER TABLE sessoes ADD COLUMN status INT NOT NULL DEFAULT 1',
+    'SELECT 1'
+);
+
+PREPARE add_session_status FROM @status_column_migration;
+EXECUTE add_session_status;
+DEALLOCATE PREPARE add_session_status;
+
 CREATE TABLE IF NOT EXISTS vendas(
     idVendas int primary key auto_increment,
     idSessao_FK int not null,
     quantidade int not null,
     valorTotal decimal(10,2),
-    dataVenda timestamp not null default
+    dataVenda timestamp not null default current_timestamp,
 
     FOREIGN KEY (idSessao_FK)
         REFERENCES sessoes(idSessao)

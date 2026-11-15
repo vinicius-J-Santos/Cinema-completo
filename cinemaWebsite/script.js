@@ -1,14 +1,8 @@
+
 const movieCatalogs = document.getElementById("movie-catalogs");
 const featuredSlider = document.getElementById("featured-slider");
 const sliderPrevious = document.getElementById("slider-previous");
 const sliderNext = document.getElementById("slider-next");
-
-// Status dos filmes
-const STATUS_FILME = {
-    EM_CARTAZ: 0,
-    EM_BREVE: 1,
-    INDISPONIVEL: 2
-};
 
 // Cria a imagem do poster
 function criarPoster(movie, classe) {
@@ -32,20 +26,6 @@ function criarPoster(movie, classe) {
     return poster;
 }
 
-// Cria indicação visual do status
-function criarIndicacaoStatus(movie) {
-    if (Number(movie.status) !== STATUS_FILME.EM_BREVE) {
-        return null;
-    }
-
-    const badge = document.createElement("span");
-
-    badge.className = "movie-status-badge";
-    badge.textContent = "Em breve";
-
-    return badge;
-}
-
 // Cria um link para a página do filme
 function criarLinkFilme(movie, classe, tituloClasse) {
     const movieLink = document.createElement("a");
@@ -54,25 +34,17 @@ function criarLinkFilme(movie, classe, tituloClasse) {
     movieLink.href = `filme.html?id=${encodeURIComponent(movie.id)}`;
     movieLink.setAttribute("aria-label", movie.titulo);
 
-    const poster = criarPoster(
-        movie,
+    const poster = criarPoster(movie,
         classe === "featured-card" ? "featured-poster" : "poster"
     );
 
     const movieTitle = document.createElement(
         classe === "featured-card" ? "h2" : "h3"
     );
-
     movieTitle.className = tituloClasse;
     movieTitle.textContent = movie.titulo;
 
-    const indicacao = criarIndicacaoStatus(movie);
-
     movieLink.append(poster, movieTitle);
-
-    if (indicacao) {
-        movieLink.append(indicacao);
-    }
 
     return movieLink;
 }
@@ -221,14 +193,9 @@ async function carregarCatalogo() {
         console.log("Categorias:", categorias);
         console.log("Relações:", relacoes);
 
-        // Filtra os filmes que podem aparecer publicamente
-        const filmesPublicos = filmes.filter(movie =>
-            Number(movie.status) !== STATUS_FILME.INDISPONIVEL
-        );
+        criarDestaques(filmes);
 
-        criarDestaques(filmesPublicos);
-
-        criarCatalogos(filmesPublicos, categorias, relacoes);
+        criarCatalogos(filmes, categorias, relacoes);
 
     } catch (erro) {
         console.error("Erro ao carregar catálogo:", erro);

@@ -42,7 +42,7 @@ public class VendaController : ControllerBase
 
         while (reader.Read())
         {
-            int id = reader.GetInt32("idVenda");
+            int id = reader.GetInt32("idVendas");
             int idSessao = reader.GetInt32("idSessao_FK");
             int quantidade = reader.GetInt32("quantidade");
             decimal valorTotal = reader.GetDecimal("valorTotal");
@@ -74,7 +74,7 @@ public class VendaController : ControllerBase
         connection.Open();
 
         string sql =
-            "SELECT * FROM vendas WHERE idVenda = @id";
+            "SELECT * FROM vendas WHERE idVendas = @id";
 
         using MySqlCommand command =
             new MySqlCommand(sql, connection);
@@ -89,7 +89,7 @@ public class VendaController : ControllerBase
             return NotFound();
         }
 
-        int idVenda = reader.GetInt32("idVenda");
+        int idVenda = reader.GetInt32("idVendas");
         int idSessao = reader.GetInt32("idSessao_FK");
         int quantidade = reader.GetInt32("quantidade");
         decimal valorTotal = reader.GetDecimal("valorTotal");
@@ -178,22 +178,6 @@ public class VendaController : ControllerBase
             });
         }
 
-        if (statusSessao == StatusSessao.Finalizado)
-        {
-            return Conflict(new
-            {
-                mensagem = "Esta sessão já foi finalizada."
-            });
-        }
-
-        if (dataHora <= DateTime.UtcNow)
-        {
-            return Conflict(new
-            {
-                mensagem = "Esta sessão já aconteceu."
-            });
-        }
-
         if (statusSessao == StatusSessao.Finalizado ||
             dataHora <= DateTime.UtcNow)
         {
@@ -204,15 +188,7 @@ public class VendaController : ControllerBase
         }
 
         // 3. Verificar o status do filme
-        if (statusFilme == StatusFilme.EmBreve)
-        {
-            return Conflict(new
-            {
-                mensagem = "Este filme ainda não está em cartaz."
-            });
-        }
-
-        if (statusFilme == StatusFilme.Indisponivel)
+        if (statusFilme != StatusFilme.EmCartaz)
         {
             return Conflict(new
             {
@@ -319,7 +295,7 @@ public class VendaController : ControllerBase
         connection.Open();
 
         string sql =
-            "DELETE FROM vendas WHERE idVenda = @id";
+            "DELETE FROM vendas WHERE idVendas = @id";
 
         MySqlCommand command =
             new MySqlCommand(sql, connection);

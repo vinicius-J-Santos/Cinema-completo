@@ -393,11 +393,25 @@ main {
 .ticket-notice {
     display: inline-block;
     padding: 12px 17px;
+    border: 0;
     border-radius: 3px;
     background: var(--red);
     color: #fff;
     font-size: 14px;
     font-weight: 800;
+    cursor: pointer;
+}
+
+.ticket-notice:hover {
+    background: #d90025;
+}
+
+.ticket-notice:focus-visible,
+.sale-close-button:focus-visible,
+.sale-back-button:focus-visible,
+.sale-confirm-button:focus-visible {
+    outline: 3px solid #f4a5aa;
+    outline-offset: 3px;
 }
     
 [hidden] {
@@ -533,14 +547,6 @@ main {
 
 
 
-.sessions-section {
-    margin-top: 60px;
-}
-
-.sessions-section h2 {
-    margin-bottom: 24px;
-}
-
 .sessions-container {
     display: grid;
     grid-template-columns:
@@ -581,6 +587,134 @@ main {
 
 .session-card button:disabled {
     background: #555;
+    cursor: not-allowed;
+}
+
+.sale-dialog {
+    width: min(460px, calc(100% - 32px));
+    max-height: min(80vh, 720px);
+    max-width: none;
+    overflow-y: auto;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    color: var(--ink);
+}
+
+.sale-dialog::backdrop {
+    background: rgb(0 0 0 / 75%);
+}
+
+.sale-dialog .sessions-container {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+}
+
+.sale-dialog .session-card {
+    padding: 16px;
+}
+
+.sale-dialog .session-card h3 {
+    margin: 0 0 10px;
+}
+
+.sale-dialog-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.sale-dialog-heading h2 {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+.sale-close-button {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.sale-back-button {
+    margin: 0 0 18px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    cursor: pointer;
+}
+
+.sale-back-button:hover {
+    color: var(--red);
+}
+
+.sale-session-details {
+    padding: 14px;
+    border-radius: 8px;
+    background: var(--page);
+}
+
+.sale-session-details p {
+    margin: 6px 0;
+    color: var(--muted);
+}
+
+.sale-quantity {
+    display: grid;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.sale-quantity input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--page);
+    color: var(--ink);
+    font: inherit;
+}
+
+.sale-total {
+    display: flex;
+    justify-content: space-between;
+    margin: 22px 0;
+    font-size: 18px;
+}
+
+.sale-total strong {
+    color: var(--red);
+}
+
+.sale-message {
+    color: var(--error);
+}
+
+.sale-message.success {
+    color: #8fe0aa;
+}
+
+.sale-confirm-button {
+    width: 100%;
+    padding: 13px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--red);
+    color: #fff;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.sale-confirm-button:disabled {
+    opacity: 0.6;
     cursor: not-allowed;
 }
 
@@ -684,25 +818,4 @@ main {
     .checkout-movie img {
         width: 80px;
     }
-}
-
-.movie-card,
-.featured-card {
-    position: relative;
-}
-
-.movie-status-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-
-    padding: 6px 12px;
-    border-radius: 20px;
-
-    background-color: #d99b35;
-    color: #fff;
-
-    font-size: 12px;
-    font-weight: bold;
-    text-transform: uppercase;
 }
