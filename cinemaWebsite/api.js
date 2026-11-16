@@ -1,8 +1,8 @@
 
-const API_URL = "http://localhost:5172/api";
+const API_URL = "https://cinema-api-hs2h.onrender.com";
 
 async function buscarFilmes() {
-    const resposta = await fetch(`${API_URL}/Filme`);
+    const resposta = await fetch(`${API_URL}/api/Filme`);
 
     if (!resposta.ok) {
         throw new Error("Erro ao buscar filmes");
@@ -12,7 +12,7 @@ async function buscarFilmes() {
 }
 
 async function buscarCategorias() {
-    const resposta = await fetch(`${API_URL}/Categoria`);
+    const resposta = await fetch(`${API_URL}/api/Categoria`);
 
     if (!resposta.ok) {
         throw new Error("Erro ao buscar categorias");
@@ -22,7 +22,7 @@ async function buscarCategorias() {
 }
 
 async function buscarRelacoes() {
-    const resposta = await fetch(`${API_URL}/CategoriaFilme`);
+    const resposta = await fetch(`${API_URL}/api/CategoriaFilme`);
 
     if (!resposta.ok) {
         throw new Error("Erro ao buscar relações");

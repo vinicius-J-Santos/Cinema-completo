@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5172/api";
+const API_URL = "https://cinema-api-hs2h.onrender.com/api";
 
 // Status conforme os enums da API
 const STATUS_FILME = {
