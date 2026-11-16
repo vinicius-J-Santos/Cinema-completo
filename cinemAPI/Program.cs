@@ -15,8 +15,9 @@ builder.Services.AddCors(options =>
                 "http://127.0.0.1:5500",
                 "http://localhost:5500",
                 "https://cinemawebsite.vercel.app",
-                "https://sitedashcine.vercel.app"
-            )
+                "https://sitedashcine.vercel.app",
+                "http://localhost:8081"
+            
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
