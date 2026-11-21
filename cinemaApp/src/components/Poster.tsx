@@ -1,6 +1,8 @@
+
 import React, { useState } from 'react';
 import { Image, Text, View } from 'react-native';
 import { styles } from '../styles/cinemaStyles';
+import { API_BASE_URL } from '../api/api';
 
 export function Poster({
   uri,
@@ -11,6 +13,7 @@ export function Poster({
 }) {
   const [failed, setFailed] = useState(false);
   const posterStyle = featured ? styles.featuredPoster : styles.poster;
+
   if (!uri || failed) {
     return (
       <View style={[posterStyle, styles.posterFallback]}>
@@ -18,9 +21,12 @@ export function Poster({
       </View>
     );
   }
+
+  const imageUrl = `${API_BASE_URL}/imagens/${uri}`;
+
   return (
     <Image
-      source={{ uri }}
+      source={{ uri: imageUrl }}
       resizeMode="cover"
       onError={() => setFailed(true)}
       style={posterStyle}

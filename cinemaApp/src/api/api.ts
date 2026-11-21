@@ -1,4 +1,5 @@
-const API_URL = 'https://cinema-api-hs2h.onrender.com/api';
+export const API_BASE_URL = 'https://cinema-api-hs2h.onrender.com';
+const API_URL = `${API_BASE_URL}/api`;
 
 export async function request<T>(path: string, options?: RequestInit): Promise<T> {
   let response: Response;
