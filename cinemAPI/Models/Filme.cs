@@ -13,10 +13,19 @@ public class Filme
     public string PosterUrl { get; set; } = string.Empty;
     public StatusFilme Status { get; set; }
 
-    public Filme(){
-        
+    public Filme()
+    {
     }
-    public Filme(int id, string titulo, string sinopse, int duracao, ClassificacaoFilme classificacao, DateOnly dataLancamento, string posterUrl, StatusFilme status)
+
+    public Filme(
+        int id,
+        string titulo,
+        string sinopse,
+        int duracao,
+        ClassificacaoFilme classificacao,
+        DateOnly dataLancamento,
+        string posterUrl,
+        StatusFilme status)
     {
         Id = id;
         Titulo = titulo;
@@ -28,4 +37,3 @@ public class Filme
         Status = status;
     }
 }
-

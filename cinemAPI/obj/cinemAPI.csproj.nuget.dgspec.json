@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\DS\\projetoFullStack4em1\\cinemAPI\\cinemAPI.csproj": {}
+    "E:\\DS\\projetoFullStack4em1\\cinemapi\\cinemAPI.csproj": {}
   },
   "projects": {
-    "E:\\DS\\projetoFullStack4em1\\cinemAPI\\cinemAPI.csproj": {
+    "E:\\DS\\projetoFullStack4em1\\cinemapi\\cinemAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\DS\\projetoFullStack4em1\\cinemAPI\\cinemAPI.csproj",
+        "projectUniqueName": "E:\\DS\\projetoFullStack4em1\\cinemapi\\cinemAPI.csproj",
         "projectName": "cinemAPI",
-        "projectPath": "E:\\DS\\projetoFullStack4em1\\cinemAPI\\cinemAPI.csproj",
+        "projectPath": "E:\\DS\\projetoFullStack4em1\\cinemapi\\cinemAPI.csproj",
         "packagesPath": "C:\\Users\\pichau\\.nuget\\packages\\",
-        "outputPath": "E:\\DS\\projetoFullStack4em1\\cinemAPI\\obj\\",
+        "outputPath": "E:\\DS\\projetoFullStack4em1\\cinemapi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pichau\\AppData\\Roaming\\NuGet\\NuGet.Config",

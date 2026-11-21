@@ -5,7 +5,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddSwaggerGen();
 
-// Registrando a política CORS
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CinemaPolicy", policy =>
@@ -28,8 +28,10 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// Aplicando a política CORS
 app.UseCors("CinemaPolicy");
+
+// Permite acessar imagens e outros arquivos estáticos
+app.UseStaticFiles();
 
 app.MapControllers();
 

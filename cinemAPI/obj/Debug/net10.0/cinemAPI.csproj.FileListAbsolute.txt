@@ -161,3 +161,4 @@ C:\Users\1\AppData\Local\Temp\cinema-api-build\cinemAPI.deps.json
 C:\Users\1\AppData\Local\Temp\cinema-api-build\cinemAPI.runtimeconfig.json
 C:\Users\1\AppData\Local\Temp\cinema-api-build\cinemAPI.dll
 C:\Users\1\AppData\Local\Temp\cinema-api-build\cinemAPI.pdb
+E:\DS\projetoFullStack4em1\cinemapi\bin\Debug\net10.0\cinemAPI.staticwebassets.runtime.json
